@@ -40,7 +40,8 @@ namespace RandomTeamGenerator.Processors
 
 		public void Process()
 		{
-			List<Player> playerList = _config.Players.ToList();
+			List<Player> allPlayers = _config.Players.ToList();
+			var playerList = allPlayers.Where(player => player.IsPlaying).ToList();
 			IEnumerable<RandomScale> randomScaleParametes = _config.RandomScaleParameters;
 			List<Player> selectedPlayers = new List<Player>();
 
@@ -135,7 +136,7 @@ namespace RandomTeamGenerator.Processors
 					continue;
 				}
 
-				if (_teamValidator.IsNationalityThresholdReached(selectedPlayers, selectedPlayer.Nationality))
+				if (_teamValidator.HasSingleTeamThresholdReached(selectedPlayers, selectedPlayer.Team))
 				{
 					playerList.RemoveAll(player => player.Nationality == selectedPlayer.Nationality);
 					continue;
@@ -144,11 +145,12 @@ namespace RandomTeamGenerator.Processors
 				if (!selectedPlayers.Any(Player => Player.Name == selectedPlayer.Name))
 				{
 					selectedPlayers.Add(selectedPlayer);
+
+					if (!_teamValidator.IsValid(selectedPlayers))					
+						selectedPlayers.RemoveAt(selectedPlayers.Count - 1);					
+
 					playerList.RemoveAll(player => player.Name == selectedPlayer.Name);
 				}
-
-				if (selectedPlayers.Count == 11 && !_teamValidator.IsValid(selectedPlayers))
-					selectedPlayers.Clear();
 
 				_team = selectedPlayers.ToList();
 			}

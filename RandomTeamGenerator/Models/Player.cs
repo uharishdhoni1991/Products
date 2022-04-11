@@ -1,4 +1,5 @@
 ﻿using RandomTeamGenerator.Helpers;
+using RandomTeamGenerator.Validators;
 
 namespace RandomTeamGenerator.Models
 {
@@ -12,6 +13,7 @@ namespace RandomTeamGenerator.Models
 		public bool IsViceCaptain { get; private set; }
 		public Speciality Speciality { get; private set; }
 		public Nationality Nationality { get; private set; }
+		public Team Team { get; private set; }
         public bool IsPlaying { get; private set; }
 
         public override string ToString()
@@ -41,7 +43,7 @@ namespace RandomTeamGenerator.Models
 				player.Speciality = Speciality.AllRounder;
 
 			string isPlaying = values[5];
-			player.IsPlaying = int.Parse(isPlaying) == 0 ? false : true;				
+			player.IsPlaying = isPlaying == "NO" ? false : true;				
 
 			string nationality = values[6];
 			if (nationality == EnumExtensions.GetDescription(Nationality.India))
@@ -56,6 +58,28 @@ namespace RandomTeamGenerator.Models
 				player.Nationality = Nationality.SouthAfrica;
 			else if (nationality == EnumExtensions.GetDescription(Nationality.NewZealand))
 				player.Nationality = Nationality.NewZealand;
+
+			string team = values[7];
+			if (team == EnumExtensions.GetDescription(Team.RR))
+				player.Team = Team.RR;
+			else if(team == EnumExtensions.GetDescription(Team.KKR))
+				player.Team = Team.KKR;
+			else if (team == EnumExtensions.GetDescription(Team.RCB))
+				player.Team = Team.RCB;
+			else if (team == EnumExtensions.GetDescription(Team.LSG))
+				player.Team = Team.LSG;
+			else if (team == EnumExtensions.GetDescription(Team.GT))
+				player.Team = Team.GT;
+			else if (team == EnumExtensions.GetDescription(Team.DC))
+				player.Team = Team.DC;
+			if (team == EnumExtensions.GetDescription(Team.PBKS))
+				player.Team = Team.PBKS;
+			if (team == EnumExtensions.GetDescription(Team.SRH))
+				player.Team = Team.SRH;
+			if (team == EnumExtensions.GetDescription(Team.MI))
+				player.Team = Team.MI;
+			else if (team == EnumExtensions.GetDescription(Team.CSK))
+				player.Team = Team.CSK;
 
 			return player;
 		}

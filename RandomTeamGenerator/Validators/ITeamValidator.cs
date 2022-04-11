@@ -7,6 +7,6 @@ namespace RandomTeamGenerator.Validators
 	{
 		bool IsValid(IEnumerable<Player> team);
 		bool IsSpecialityThresholdReached(IEnumerable<Player> team, Speciality speciality);
-		bool IsNationalityThresholdReached(IEnumerable<Player> selectedPlayers, Nationality nationality);
+		bool HasSingleTeamThresholdReached(IEnumerable<Player> selectedPlayers, Team team);
 	}
 }

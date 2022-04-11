@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ namespace RandomTeamGenerator.Processors
 	internal class ConfigProvider : IConfigProvider
 	{
 		private readonly IEnumerable<Player> _players;
+		private const string _path = "DataPath";
 
 		public IEnumerable<Player> Players
 		{
@@ -36,7 +38,7 @@ namespace RandomTeamGenerator.Processors
 			IFileReader<IEnumerable<Player>> fileRead =
 				fileReader ?? throw new ArgumentNullException(nameof(fileReader));
 
-			_players = fileRead.FromPath("./Data/Data.csv");
+			_players = fileRead.FromPath(ConfigurationManager.AppSettings[_path]);
 		}
 	}
 }

@@ -12,11 +12,12 @@ namespace RandomTeamGenerator.Validators
 		private int _bowlerCount;
 		private int _wicketKeeperCount;
 
-		public bool IsNationalityThresholdReached(IEnumerable<Player> selectedPlayers, Nationality nationality)
+		public bool HasSingleTeamThresholdReached(IEnumerable<Player> selectedPlayers, Team team)
 		{
 			return selectedPlayers
-				.GroupBy(player => nationality)
-				.Any(player => player.Count() > 7);
+				.GroupBy(player => player.Team)
+				.Select(p => p.Count())
+				.Any(p => p > 7); 
 		}
 
 		public bool IsSpecialityThresholdReached(IEnumerable<Player> team, Speciality speciality)
@@ -39,11 +40,30 @@ namespace RandomTeamGenerator.Validators
 		{
 			PopulateCount(team);
 
-			return team.Sum(player => player.Credits) <= Constants.MaxCredits
-				&& _wicketKeeperCount >= Constants.MinWicketKeepers && _wicketKeeperCount <= Constants.MaxWicketKeepers
-				&& _batsmanCount >= Constants.MinBatsmen && _batsmanCount <= Constants.MaxBatsmen
-				&& _allRounderCount >= Constants.MinimumAllRounders && _allRounderCount <= Constants.MaxAllRounders
-				&& _bowlerCount >= Constants.MinimumBowlers && _bowlerCount <= Constants.MaximumBowlers;
+			bool isValid = false;
+			Player currentPlayerAdded = team.Last();
+			Speciality currentPlayerSpeciality = currentPlayerAdded.Speciality;
+			int totalCount = team.Count();
+
+			isValid = team.Sum(player => player.Credits) <= Constants.MaxCredits;
+
+			switch (currentPlayerSpeciality)
+			{
+				case Speciality.WicketKeeper:
+					isValid = isValid && _wicketKeeperCount <= Constants.MaxWicketKeepers;
+					break;
+				case Speciality.Batsman:
+					isValid = isValid && _batsmanCount <= Constants.MaxBatsmen;
+					break;
+				case Speciality.AllRounder:
+					isValid = isValid && _allRounderCount <= Constants.MaxAllRounders;
+					break;
+				case Speciality.Bowler:
+					isValid = isValid && _bowlerCount <= Constants.MaximumBowlers;
+					break;
+			}
+
+			return isValid;
 		}
 
 		private void PopulateCount(IEnumerable<Player> team)

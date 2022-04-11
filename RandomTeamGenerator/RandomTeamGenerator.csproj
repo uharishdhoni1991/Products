@@ -33,6 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -52,7 +53,7 @@
     <Compile Include="Models\Player.cs" />
     <Compile Include="Models\RandomScale.cs" />
     <Compile Include="Models\Speciality.cs" />
-    <Compile Include="Models\Team.cs" />
+    <Compile Include="Models\Nationality.cs" />
     <Compile Include="Providers\ConfigProvider.cs" />
     <Compile Include="Providers\CsvFileReader.cs" />
     <Compile Include="Providers\IConfigProvider.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validators\ITeamValidator.cs" />
+    <Compile Include="Models\Team.cs" />
     <Compile Include="Validators\TeamValidator.cs" />
     <EmbeddedResource Include="RTG.resx">
       <DependentUpon>RTG.cs</DependentUpon>
@@ -83,6 +85,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="Data\CSK_BLR.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\RCB_SRH.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

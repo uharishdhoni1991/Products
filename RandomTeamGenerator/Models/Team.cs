@@ -1,20 +1,16 @@
-﻿using System.ComponentModel;
-
-namespace RandomTeamGenerator.Models
+﻿namespace RandomTeamGenerator.Models
 {
-	public enum Nationality
-	{
-		[Description("IND")]
-		India,
-		[Description("AUS")]
-		Australia,
-		[Description("SA")]
-		SouthAfrica,
-		[Description("BAN")]
-		Bangladesh,
-		[Description("AFG")]
-		Afganistan,
-		[Description("NZ")]
-		NewZealand
-	}
+    public enum Team
+    {
+        RR,
+        KKR,
+        RCB,
+        LSG,
+        GT,
+        DC,
+        PBKS,
+        SRH,
+        MI,
+        CSK
+    }
 }
