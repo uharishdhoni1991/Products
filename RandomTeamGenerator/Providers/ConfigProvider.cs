@@ -1,0 +1,42 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using RandomTeamGenerator.Models;
+
+namespace RandomTeamGenerator.Processors
+{
+	internal class ConfigProvider : IConfigProvider
+	{
+		private readonly IEnumerable<Player> _players;
+
+		public IEnumerable<Player> Players
+		{
+			get
+			{
+				return _players;
+			}
+		}
+
+		public IEnumerable<RandomScale> RandomScaleParameters
+		{
+			get
+			{
+				yield return RandomScale.Name;
+				yield return RandomScale.Credits;
+				yield return RandomScale.Points;
+				yield return RandomScale.SelectedBy;
+			}
+		}
+
+		public ConfigProvider(IFileReader<IEnumerable<Player>> fileReader)
+		{
+			IFileReader<IEnumerable<Player>> fileRead =
+				fileReader ?? throw new ArgumentNullException(nameof(fileReader));
+
+			_players = fileRead.FromPath("./Data/Data.csv");
+		}
+	}
+}
